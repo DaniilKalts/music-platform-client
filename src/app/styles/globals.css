@@ -1,0 +1,173 @@
+@import "tailwindcss";
+
+:root {
+  --bg-base: #000000;
+  --bg-surface: #121212;
+  --bg-elevated: #1e1e1e;
+  --bg-hover: #2a2a2a;
+  --bg-active: #333333;
+
+  --text-primary: #ffffff;
+  --text-secondary: #b3b3b3;
+  --text-muted: #727272;
+
+  --accent: #11c1b6;
+  --accent-hover: #2ee0d3;
+  --border: rgba(255, 255, 255, 0.1);
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+
+  --sidebar-width: 260px;
+  --player-height: 90px;
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out-soft: cubic-bezier(0.45, 0, 0.2, 1);
+  --transition: all 0.25s var(--ease-out-soft);
+}
+
+@theme {
+  --color-accent: #11c1b6;
+  --color-accent-hover: #2ee0d3;
+  --color-accent-deep: #0a8f87;
+
+  --color-spotify-green: #11c1b6;
+  --color-spotify-black: #121212;
+  --color-spotify-lightblack: #282828;
+  --color-spotify-gray: #b3b3b3;
+  --color-spotify-hover: #2a2a2a;
+  --color-netflix-red: #e50914;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.18) transparent;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-black text-white antialiased overflow-hidden;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+  transition: background 0.2s;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.32);
+  background-clip: content-box;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+input[type="range"] {
+  @apply appearance-none bg-transparent cursor-pointer;
+}
+input[type="range"]::-webkit-slider-runnable-track {
+  @apply h-1 bg-neutral-600 rounded-full;
+}
+input[type="range"]::-webkit-slider-thumb {
+  @apply appearance-none w-3 h-3 bg-white rounded-full -mt-1 opacity-0 transition-opacity duration-200;
+}
+.group:hover input[type="range"]::-webkit-slider-thumb {
+  @apply opacity-100;
+}
+.group:hover input[type="range"]::-webkit-slider-runnable-track {
+  @apply bg-accent;
+}
+
+.row-scroll {
+  scroll-behavior: smooth;
+  scroll-snap-type: x proximity;
+}
+.row-scroll > * {
+  scroll-snap-align: start;
+}
+
+@keyframes bounce {
+  0%, 100% { height: 4px; }
+  50% { height: 14px; }
+}
+.animate-bounce-playing {
+  animation: bounce 1s infinite;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.animate-fade-in {
+  animation: fade-in 0.5s var(--ease-out-soft) both;
+}
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s var(--ease-out-soft) both;
+}
+
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+.animate-scale-in {
+  animation: scale-in 0.4s var(--ease-out-soft) both;
+}
+
+@keyframes shimmer {
+  100% { transform: translateX(100%); }
+}
+
+.shimmer {
+  position: relative;
+  overflow: hidden;
+}
+.shimmer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
+  animation: shimmer 1.6s infinite;
+}
+
+.stagger > * {
+  opacity: 0;
+  animation: fade-in-up 0.5s var(--ease-out-soft) forwards;
+  animation-delay: calc(var(--i, 0) * 45ms);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
